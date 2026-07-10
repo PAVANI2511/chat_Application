@@ -69,7 +69,11 @@ RealTimeChat/
 │     ├── postman_get_users.png
 │     ├── postman_update_user.png
 │     ├── postman_delete_user.png
-│     └── frontend_dashboard.png
+│     ├── frontend_dashboard.png
+│     ├── frontend_dashboard_dark.png
+│     ├── frontend_dashboard_light.png
+│     ├── frontend_profile_settings.png
+│     └── frontend_chat_emojis.png
 │
 ├── db.sqlite3           # Local SQLite Database
 ├── manage.py            # Django execution script
@@ -123,7 +127,7 @@ Simply open `RealTimeChat/Frontend/index.html` directly in any web browser.
 | :--- | :--- | :--- | :--- |
 | **POST** | `/users/register/` | `full_name`, `username`, `email`, `password`, `profile_image` | Registers a new user account. |
 | **POST** | `/users/login/` | `username`, `password` | Logs in and starts a user session. |
-| **POST** | `/users/logout/` | *None | Logs out the user and clears the session. |
+| **POST** | `/users/logout/` | *None* | Logs out the user and clears the session. |
 | **GET** | `/users/me/` | *None* | Retrieves current logged-in user profile. |
 | **GET** | `/users/` | `?search=query` (optional) | Retrieves all users (supports optional search). |
 | **PUT** | `/users/update/<id>/` | `full_name`, `email`, `password`, `profile_image` (optional fields) | Updates user profile details. |
@@ -178,14 +182,31 @@ Verification of the user deletion API (`DELETE /users/delete/<id>/`). A DELETE r
 
 ---
 
-### 5. Frontend Application Dashboard UI
-Below is a live screenshot of the web chat application interface loaded in Chrome at `http://127.0.0.1:8000/static/dashboard.html`. It demonstrates:
-- The sidebar showing the logged-in user (`teju` / `@teju@434`) and the recent conversations list.
-- The active chat panel with user `S PAVANI` showing their online status badge.
-- Chronological message history with distinct sent (purple, right-aligned) and received (dark grey, left-aligned) message bubble cards.
-- The newly styled cute **Lorelei** avatar icons:
+### 5. Frontend Application Dashboard - Dark Mode
+A view of the web chat application dashboard loaded in the browser under the default **Dark Theme**. It shows the sidebar showing the active thread listing and status indicators, paired with the scrollable chat history message bubbles using the custom cute avatars:
 
-![Frontend Dashboard UI](RealTimeChat/screenshots/frontend_dashboard.png)
+![Frontend Dashboard UI - Dark Mode](RealTimeChat/screenshots/frontend_dashboard_dark.png)
+
+---
+
+### 6. Frontend Application Dashboard - Light Mode
+Demonstration of the **Dark/Light Theme toggler** (Bonus Feature 4). Clicking the theme toggle switches the CSS class attributes, dynamically applying an off-white background with dark elements for optimal readability:
+
+![Frontend Dashboard UI - Light Mode](RealTimeChat/screenshots/frontend_dashboard_light.png)
+
+---
+
+### 7. User Profile settings Modal
+Verification of the interactive user **Profile Settings Overlay Modal** (Bonus Feature 5). The modal allows users to dynamically update their Full Name, Email Address, select from the custom cute preset avatars, or upload their own custom avatar. It also includes the red button to delete the account:
+
+![User Profile Settings Modal](RealTimeChat/screenshots/frontend_profile_settings.png)
+
+---
+
+### 8. Frontend Chat with Emojis & Message Input
+Demonstration of **Emoji Support** (Bonus Feature 5) in the chat window, displaying shared emojis in the message list alongside the text entry textbox and the Send button:
+
+![Frontend Chat with Emojis](RealTimeChat/screenshots/frontend_chat_emojis.png)
 
 ---
 
