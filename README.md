@@ -73,7 +73,9 @@ RealTimeChat/
 │     ├── frontend_dashboard_dark.png
 │     ├── frontend_dashboard_light.png
 │     ├── frontend_profile_settings.png
-│     └── frontend_chat_emojis.png
+│     ├── frontend_chat_emojis.png
+│     ├── database_userprofile.png
+│     └── database_chatmessage.png
 │
 ├── db.sqlite3           # Local SQLite Database
 ├── manage.py            # Django execution script
@@ -207,6 +209,21 @@ Verification of the interactive user **Profile Settings Overlay Modal** (Bonus F
 Demonstration of **Emoji Support** (Bonus Feature 5) in the chat window, displaying shared emojis in the message list alongside the text entry textbox and the Send button:
 
 ![Frontend Chat with Emojis](RealTimeChat/screenshots/frontend_chat_emojis.png)
+
+---
+
+### 9. Database Tables (SQLite Local Database View)
+Direct table data views from the local SQLite database `db.sqlite3` verifying structural models and active records:
+
+* **UserProfile Table (`Backend_userprofile`):**
+  Shows user records, email configurations, and profile pictures:
+  
+  ![UserProfile Database Table View](RealTimeChat/screenshots/database_userprofile.png)
+
+* **ChatMessage Table (`Backend_chatmessage`):**
+  Shows real-time chat histories, sender/receiver matching, and timestamps:
+  
+  ![ChatMessage Database Table View](RealTimeChat/screenshots/database_chatmessage.png)
 
 ---
 
