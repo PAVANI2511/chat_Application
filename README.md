@@ -64,6 +64,13 @@ RealTimeChat/
 │     ├── style.css      # Premium stylesheet (Light/Dark themes, responsive grids)
 │     └── script.js      # Fetch API services, polling, typing status, message CRUD
 │
+├── screenshots/         # Verified application screenshots folder
+│     ├── postman_login_user.png
+│     ├── postman_get_users.png
+│     ├── postman_update_user.png
+│     ├── postman_delete_user.png
+│     └── frontend_dashboard.png
+│
 ├── db.sqlite3           # Local SQLite Database
 ├── manage.py            # Django execution script
 ├── seed.py              # Populates database with sample test data
@@ -103,7 +110,8 @@ The server runs locally at `http://127.0.0.1:8000/`.
 ### 5. Launch the Frontend
 Simply open `RealTimeChat/Frontend/index.html` directly in any web browser. 
 
-*Note: Since the backend is configured with full CORS permissions and supports custom `X-Sender` headers alongside sessions, you can open and test the application directly using the file protocol (`file://`) or via local servers (e.g. Live Server).*
+*Note: Since the backend is configured with full CORS permissions and supports static files, you can access the application directly through the Django development server at:*
+👉 **[http://127.0.0.1:8000/static/index.html](http://127.0.0.1:8000/static/index.html)**
 
 ---
 
@@ -115,7 +123,7 @@ Simply open `RealTimeChat/Frontend/index.html` directly in any web browser.
 | :--- | :--- | :--- | :--- |
 | **POST** | `/users/register/` | `full_name`, `username`, `email`, `password`, `profile_image` | Registers a new user account. |
 | **POST** | `/users/login/` | `username`, `password` | Logs in and starts a user session. |
-| **POST** | `/users/logout/` | *None* | Logs out the user and clears the session. |
+| **POST** | `/users/logout/` | *None | Logs out the user and clears the session. |
 | **GET** | `/users/me/` | *None* | Retrieves current logged-in user profile. |
 | **GET** | `/users/` | `?search=query` (optional) | Retrieves all users (supports optional search). |
 | **PUT** | `/users/update/<id>/` | `full_name`, `email`, `password`, `profile_image` (optional fields) | Updates user profile details. |
@@ -137,6 +145,47 @@ Simply open `RealTimeChat/Frontend/index.html` directly in any web browser.
 | :--- | :--- | :--- |
 | **GET** | `/conversation/` | Retrieves all users whom the current user has chatted with, including the latest message preview. |
 | **GET** | `/conversation/<username>/` | Retrieves the chronological conversation history with a user, plus their live typing status. |
+
+---
+
+## 📸 Application Screenshots & Verification
+
+### 1. User Authentication Verification (Postman)
+Below is the verification of the user creation/session login API (`POST /users/login/` or `/users/register/`). The response confirms that a user profile is created/logged-in, returning the unique `user_id`, personal metadata, and default avatar configuration:
+
+![User Login / Registration](RealTimeChat/screenshots/postman_login_user.png)
+
+---
+
+### 2. Viewing Registered Users (Postman)
+Verification of the `GET /users/` API endpoint returning all registered records from the database in JSON format. It lists user details including full name, username, email, active avatar key, and whether they are active (`is_online` status):
+
+![View Users](RealTimeChat/screenshots/postman_get_users.png)
+
+---
+
+### 3. Updating User Profile details (Postman)
+Verification of the profile update CRUD API (`PUT /users/update/<id>/`). A PUT request updating user `101`'s email to `rahulkumar@gmail.com` and full name to `Rahul Kumar` returns a successful completion code `200 OK`:
+
+![Update User Profile](RealTimeChat/screenshots/postman_update_user.png)
+
+---
+
+### 4. Deleting User Profile (Postman)
+Verification of the user deletion API (`DELETE /users/delete/<id>/`). A DELETE request on user `101` removes their profile from the database and returns a confirmation JSON response:
+
+![Delete User Profile](RealTimeChat/screenshots/postman_delete_user.png)
+
+---
+
+### 5. Frontend Application Dashboard UI
+Below is a live screenshot of the web chat application interface loaded in Chrome at `http://127.0.0.1:8000/static/dashboard.html`. It demonstrates:
+- The sidebar showing the logged-in user (`teju` / `@teju@434`) and the recent conversations list.
+- The active chat panel with user `S PAVANI` showing their online status badge.
+- Chronological message history with distinct sent (purple, right-aligned) and received (dark grey, left-aligned) message bubble cards.
+- The newly styled cute **Lorelei** avatar icons:
+
+![Frontend Dashboard UI](RealTimeChat/screenshots/frontend_dashboard.png)
 
 ---
 
@@ -163,10 +212,3 @@ Test 11: Delete Message... Status: 200. Passed.
 Test 12: Delete User... Status: 200. Passed.
 ALL REST API INTEGRATION TESTS PASSED SUCCESSFULLY!
 ```
-
----
-
-## 🎨 UI/UX Design Aesthetics
-* **Palette**: Curated dark indigo aesthetic (deep slate, soft violet accents, glassmorphic cards) paired with a clean white/slate light theme.
-* **Transitions**: Smooth animations for slide-up forms, fade-in chat messages, and micro-hovers on click actions.
-* **Responsive Styling**: Supports flexible scaling across desktop, tablet, and mobile devices (uses hidden sidebars and back buttons on mobile layouts).
