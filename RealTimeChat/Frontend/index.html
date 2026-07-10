@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat App - Welcome</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Main Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-comments"></i> RealTime<span>Chat</span>
+            </a>
+            <div class="nav-actions">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-secondary">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Hero Section -->
+    <main class="hero-section">
+        <div class="hero-card">
+            <div class="hero-logo-large">
+                <i class="fa-solid fa-comments"></i> RealTimeChat
+            </div>
+            <h1 class="hero-title" style="font-size: 32px; margin-bottom: 15px;">Connect Instantly with Anyone</h1>
+            <p class="hero-subtitle">
+                Experience secure, responsive, and seamless real-time messaging. Join rooms, chat with friends, customize your profile, and search for users instantly.
+            </p>
+            <div class="hero-buttons">
+                <a href="register.html" class="btn btn-primary btn-lg" style="padding: 14px 28px; font-size: 16px;">
+                    Get Started <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </a>
+                <a href="login.html" class="btn btn-secondary btn-lg" style="padding: 14px 28px; font-size: 16px;">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Simple footer -->
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 12px; border-top: 1px solid var(--border-color); background-color: var(--bg-secondary);">
+        &copy; 2026 RealTimeChat App. Created for Major Project Examination. All rights reserved.
+    </footer>
+
+    <script>
+        // Simple theme toggle helper for welcome page
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Load saved theme
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>

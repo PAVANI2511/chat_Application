@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat App - Register</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fa-solid fa-comments"></i> RealTime<span>Chat</span>
+            </a>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-secondary">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="form-section">
+        <div class="form-card">
+            <div class="form-header">
+                <h1 class="form-title">Create Account</h1>
+                <p class="form-desc">Get started with your free chat account</p>
+            </div>
+
+            <form id="register-form">
+                <!-- Profile Image / Avatar Picker -->
+                <div class="form-group" style="text-align: center;">
+                    <label class="form-label" style="text-align: center;">Select Profile Avatar</label>
+                    <div class="avatar-selection-container" id="avatar-picker">
+                        <!-- Avatars will be populated by JS or hardcoded -->
+                        <div class="avatar-option selected" data-avatar="avatar1">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Felix" alt="Felix">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar2">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Aneka" alt="Aneka">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar3">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Jack" alt="Jack">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar4">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Sasha" alt="Sasha">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar5">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=George" alt="George">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar6">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Molly" alt="Molly">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 12px;">
+                        <span style="font-size: 12px; color: var(--text-muted);">or</span>
+                        <label for="custom-avatar" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-left: 8px; display: inline-flex; gap: 5px;">
+                            <i class="fa-solid fa-upload"></i> Upload Custom
+                        </label>
+                        <input type="file" id="custom-avatar" accept="image/*" style="display: none;">
+                        <span id="file-upload-status" style="display: block; font-size: 11px; margin-top: 5px; color: var(--online-color);"></span>
+                    </div>
+                </div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="full-name" class="form-label">Full Name</label>
+                    <input type="text" id="full-name" class="form-input" placeholder="Rahul Sharma" required autocomplete="name">
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="rahul" required autocomplete="username">
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-input" placeholder="rahul@gmail.com" required autocomplete="email">
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="••••••••" required autocomplete="new-password">
+                </div>
+
+                <!-- Register Button -->
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 15px; margin-top: 10px;">
+                    Register Account
+                </button>
+            </form>
+
+            <div class="form-footer">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Set up the local pages theme toggler
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>

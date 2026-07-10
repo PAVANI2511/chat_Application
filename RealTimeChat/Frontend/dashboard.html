@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat App - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Main Dashboard Container -->
+    <main class="dashboard-container">
+        
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header: Logged-in User -->
+            <div class="sidebar-header">
+                <div class="user-profile-card">
+                    <img id="current-user-avatar" class="user-avatar" src="https://api.dicebear.com/7.x/lorelei/svg?seed=placeholder" alt="My Profile">
+                    <div class="user-info">
+                        <div id="current-user-name" class="user-name">Loading...</div>
+                        <div id="current-user-username" class="user-tag">@loading</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-actions">
+                    <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button id="profile-settings-btn" class="icon-btn" title="Edit Profile">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </button>
+                    <button id="logout-btn" class="btn btn-secondary" style="padding: 6px 12px; font-size: 12px; display: inline-flex; gap: 5px;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search Area -->
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="user-search" class="search-input" placeholder="Search users...">
+            </div>
+
+            <!-- Sidebar Navigation Tabs -->
+            <div style="display: flex; border-bottom: 1px solid var(--border-color); background-color: var(--bg-tertiary);">
+                <button id="tab-chats" class="btn" style="flex: 1; background: none; color: var(--accent-color); border-bottom: 2px solid var(--accent-color); border-radius: 0; padding: 12px; font-size: 13px;">
+                    <i class="fa-solid fa-message" style="margin-right: 6px;"></i> Chats
+                </button>
+                <button id="tab-users" class="btn" style="flex: 1; background: none; color: var(--text-secondary); border-radius: 0; padding: 12px; font-size: 13px;">
+                    <i class="fa-solid fa-users" style="margin-right: 6px;"></i> All Users
+                </button>
+            </div>
+
+            <!-- List of Chats or Users -->
+            <div class="users-list" id="users-list-container">
+                <!-- User items dynamically loaded here -->
+                <div style="text-align: center; padding: 30px; color: var(--text-muted);">
+                    <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; margin-bottom: 10px;"></i>
+                    <div>Loading users...</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Chat Pane -->
+        <section class="chat-pane" id="chat-pane">
+            <!-- Unselected Chat Placeholder -->
+            <div class="chat-placeholder" id="chat-placeholder">
+                <div class="chat-placeholder-icon">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <h2>Welcome to RealTimeChat!</h2>
+                <p>Select a user from the sidebar to view conversation history or start sending messages.</p>
+            </div>
+
+            <!-- Active Chat Interface -->
+            <div id="active-chat-container" style="display: none; flex-direction: column; height: 100%;">
+                
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="active-chat-user">
+                        <!-- Mobile back button -->
+                        <button class="icon-btn back-to-list-btn" id="back-to-list" style="display: none;">
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                        
+                        <div class="avatar-wrapper">
+                            <img id="active-chat-avatar" class="user-avatar" src="" alt="User Avatar">
+                            <span id="active-chat-status-badge" class="status-badge"></span>
+                        </div>
+                        <div class="active-chat-details">
+                            <span id="active-chat-name" class="active-chat-name">Select User</span>
+                            <span id="active-chat-status" class="active-chat-status">Offline</span>
+                        </div>
+                    </div>
+                    <div>
+                        <!-- Optional Actions -->
+                        <button class="icon-btn" title="Chat Info"><i class="fa-solid fa-circle-info"></i></button>
+                    </div>
+                </div>
+
+                <!-- Messages Window -->
+                <div class="chat-messages" id="chat-messages-container">
+                    <!-- Message items dynamically populated -->
+                </div>
+
+                <!-- Typing indicator banner -->
+                <div id="typing-indicator" style="padding: 2px 25px; font-size: 11px; color: var(--accent-color); background-color: var(--bg-secondary); min-height: 20px; display: none;">
+                    <span id="typing-username">Someone</span> is typing...
+                </div>
+
+                <!-- Chat Input Bar -->
+                <div class="chat-input-area">
+                    <form class="chat-input-form" id="chat-send-form" onsubmit="event.preventDefault();">
+                        <div class="chat-input-wrapper">
+                            <input type="text" id="chat-message-input" class="chat-textbox" placeholder="Type a message..." autocomplete="off">
+                            <button type="button" id="emoji-btn" class="emoji-trigger" title="Add Emoji">😊</button>
+                            
+                            <!-- Emoji Picker dropdown -->
+                            <div class="emoji-picker-dropdown" id="emoji-picker">
+                                <div class="emoji-option">👍</div>
+                                <div class="emoji-option">😊</div>
+                                <div class="emoji-option">😂</div>
+                                <div class="emoji-option">🔥</div>
+                                <div class="emoji-option">🎉</div>
+                                <div class="emoji-option">❤️</div>
+                                <div class="emoji-option">😎</div>
+                                <div class="emoji-option">🙌</div>
+                                <div class="emoji-option">✨</div>
+                                <div class="emoji-option">💬</div>
+                                <div class="emoji-option">👀</div>
+                                <div class="emoji-option">💡</div>
+                            </div>
+                        </div>
+                        <button type="submit" id="chat-send-btn" class="btn btn-primary">
+                            <i class="fa-solid fa-paper-plane" style="margin-right: 5px;"></i> Send
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal: Profile Settings -->
+    <div class="modal" id="profile-modal">
+        <div class="modal-content">
+            <span class="modal-close" id="profile-modal-close">&times;</span>
+            <h2 class="modal-title"><i class="fa-solid fa-user-gear" style="margin-right: 8px; color: var(--accent-color);"></i> Profile Settings</h2>
+            
+            <form id="profile-update-form">
+                <div class="form-group" style="text-align: center;">
+                    <img id="profile-edit-preview" class="user-avatar" style="width: 80px; height: 80px; margin: 0 auto 10px auto; display: block;" src="" alt="Preview">
+                    
+                    <label class="form-label" style="text-align: center;">Choose Avatar</label>
+                    <div class="avatar-selection-container" id="profile-avatar-picker" style="margin-top: 10px;">
+                        <div class="avatar-option" data-avatar="avatar1">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Felix" alt="Felix">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar2">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Aneka" alt="Aneka">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar3">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Jack" alt="Jack">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar4">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Sasha" alt="Sasha">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar5">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=George" alt="George">
+                        </div>
+                        <div class="avatar-option" data-avatar="avatar6">
+                            <img src="https://api.dicebear.com/7.x/lorelei/svg?seed=Molly" alt="Molly">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 10px;">
+                        <label for="profile-custom-avatar" class="btn btn-secondary" style="padding: 4px 10px; font-size: 11px;">
+                            <i class="fa-solid fa-upload"></i> Upload Custom
+                        </label>
+                        <input type="file" id="profile-custom-avatar" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-full-name" class="form-label">Full Name</label>
+                    <input type="text" id="profile-full-name" class="form-input" required autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-email" class="form-label">Email Address</label>
+                    <input type="email" id="profile-email" class="form-input" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="profile-password" class="form-label">Password (leave blank to keep current)</label>
+                    <input type="password" id="profile-password" class="form-input" placeholder="••••••••" autocomplete="new-password">
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-top: 25px;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">
+                        Save Changes
+                    </button>
+                    <button type="button" id="delete-account-btn" class="btn btn-danger" style="flex: 1;">
+                        Delete Account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="script.js"></script>
+    <script>
+        // Set up the local pages theme toggler
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            let newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'dark') {
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+    </script>
+</body>
+</html>
