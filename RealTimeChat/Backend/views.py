@@ -333,10 +333,12 @@ def update_message(request, id):
         return JsonResponse({'error': 'Message not found'}, status=404)
 
     current_user = get_current_user(request)
+    if not current_user:
+        return JsonResponse({'error': 'Unauthorized. Please login.'}, status=401)
     update_user_activity(current_user)
 
     # Security check: User can only update their own messages
-    if current_user and chat.sender != current_user:
+    if chat.sender != current_user:
         return JsonResponse({'error': 'Unauthorized to edit this message'}, status=403)
 
     try:
@@ -374,10 +376,12 @@ def delete_message(request, id):
         return JsonResponse({'error': 'Message not found'}, status=404)
 
     current_user = get_current_user(request)
+    if not current_user:
+        return JsonResponse({'error': 'Unauthorized. Please login.'}, status=401)
     update_user_activity(current_user)
 
     # Security check: User can only delete their own messages
-    if current_user and chat.sender != current_user:
+    if chat.sender != current_user:
         return JsonResponse({'error': 'Unauthorized to delete this message'}, status=403)
 
     try:

@@ -9,6 +9,16 @@ def run_tests():
     session1 = requests.Session()
     session2 = requests.Session()
 
+    # Cleanup previous run test users if they exist
+    try:
+        cleanup_res = requests.get(f"{API_BASE}/users/")
+        if cleanup_res.status_code == 200:
+            for u in cleanup_res.json():
+                if u["username"] in ["testuser1", "testuser2"]:
+                    requests.delete(f"{API_BASE}/users/delete/{u['user_id']}/")
+    except Exception as e:
+        print(f"Warning during pre-test cleanup: {e}")
+
     # 1. Test User Registration
     print("Test 1: User Registration...")
     reg_data_1 = {
